@@ -1,0 +1,36 @@
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/register">Register</a>
+            </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+    <div class="d-flex justify-content-center mb-3">
+        <h1>Registro:</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        <form class="d-flex flex-column justify-content-center" action="/api/session/register" method="POST">
+            <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="username" placeholder="ingrese username"></input></div>
+            <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="first_name" placeholder="ingrese nombre"></input></div>
+            <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="last_name" placeholder="ingrese apellido"></input></div>
+            <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="email" placeholder="ingrese email"></input></div>
+            <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="age" placeholder="ingrese edad"></input></div>
+            <div class="mb-3"><input class="d-flex justify-content-center" type="password" name="password" placeholder="ingrese password"></input></div>
+            <button type="submit" class="btn btn-primary m-2">Registrarse</button>
+        </form>
+    </div>

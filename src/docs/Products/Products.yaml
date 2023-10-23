@@ -1,0 +1,207 @@
+paths:
+  /api/product:
+    get:
+      summary: obtiene todos los productos
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+
+  /api/product/{pid}:
+    get:
+      summary: obtiene un producto por su ID
+      tags:
+        - Product
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a solicitar
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: El producto fue obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Product"
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+    put:
+      summary: Actualiza un producto en base a un id.
+      tags:
+        - Product
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a actualizar
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+      responses:
+        "201":
+          description: Producto Actualizado
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+    delete:
+      summary: Elimina un producto en base a un id.
+      tags:
+        - Product
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a eliminar
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "201":
+          description: Producto eliminado correctamente
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+  /api/product/:
+    post:
+      summary: Crea un nuevo producto.
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/createProduct"
+      responses:
+        "201":
+          description: Producto creado correctamente
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id: 
+          type: string
+          description:  Id autogenerado por Mongo
+        title:
+          type: string
+          description: titulo del producto
+        description:
+          type: string
+          description: descripción del producto
+        thumbnail:
+          type: string
+          description: link de la imagen del producto
+        price:
+          type: Number
+          description: precio del producto
+        stock:
+          type: Number
+          description: stock restante del producto
+        category:
+          type: string
+          description: categoria 
+        code:
+          type: string
+          description: codigo
+      example:
+        _id: ObjectId("asdhausyhuiejuiamsd")
+        title: "Iphone Xr 250GB"
+        description: "Descripción de iphone xr 250GB"
+        thumbnail: "https://http2.mlstatic.com/D_NQ_NP_641854-MLA46544656693_062021-O.webp"
+        price: 250
+        stock: 15
+        category: "phone"
+        code: "IXR"
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: titulo del producto
+        description:
+          type: string
+          description: descripción del producto
+        thumbnail:
+          type: string
+          description: link de la imagen del producto
+        price:
+          type: Number
+          description: precio del producto
+        stock:
+          type: Number
+          description: stock restante del producto
+        category:
+          type: string
+          description: categoria 
+        code:
+          type: string
+          description: codigo
+      example:
+        title: "Iphone XR 250GB"
+        description: "Descripción Iphone XR 250GB"
+        thumbnail: "https://http2.mlstatic.com/D_NQ_NP_641854-MLA46544656693_062021-O.webp"
+        price: 250
+        stock: 15
+        category: "phone"
+        code: "IXR"
+    createProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: titulo del producto
+        description:
+          type: string
+          description: descripción del producto
+        thumbnail:
+          type: string
+          description: link de la imagen del producto
+        price:
+          type: Number
+          description: precio del producto
+        stock:
+          type: Number
+          description: stock restante del producto
+        category:
+          type: string
+          description: categoria 
+        code:
+          type: string
+          description: codigo 
+      example:
+        title: "Iphone XR 250GB"
+        description: "Descripción Iphone XR 250GB"
+        thumbnail: "https://http2.mlstatic.com/D_NQ_NP_641854-MLA46544656693_062021-O.webp"
+        price: 250
+        stock: 15
+        category: "phone"
+        code: "IXR"

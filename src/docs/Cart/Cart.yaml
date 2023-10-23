@@ -1,0 +1,226 @@
+paths:
+  /api/cart/:
+    get:
+      summary: Obtiene todos los carritos
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Carritos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error interno del server
+  /api/cart/{uid}:
+    post:
+      summary: Crea un nuevo carrito para un usuario
+      tags:
+        - Cart
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: El id del usuario para crear el carrito
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "201":
+          description: Carrito creado correctamente
+        "500":
+          description: Error interno del server
+
+  /api/cart/{cid}:
+    get:
+      summary: Obtiene un carrito por su ID
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito a solicitar
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: El carrito fue obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Cart"
+        "500":
+          description: Error interno del server
+    put:
+      summary: Actualiza un carrito en base a un id.
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito a actualizar
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateCart"
+      responses:
+        "201":
+          description: Carrito Actualizado
+        "500":
+          description: Error interno del server
+    delete:
+      summary: Elimina un carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito que se va a eliminar
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El id del carrito
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Producto eliminado al carrito correctamente
+        "404":
+          description: El carrito o el producto no fueron encontrados
+        "500":
+          description: Error interno del server
+
+
+
+  /api/cart/{cid}/product/{pid}:
+    put:
+      summary: Añade un producto al carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito al que se añadirá el producto
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a añadir al carrito
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Producto agregado al carrito correctamente
+        "404":
+          description: El carrito o el producto no fueron encontrados
+        "500":
+          description: Error interno del server
+    delete:
+      summary: Elimina un producto del carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito al que se eliminara el producto
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a eliminar del carrito
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Producto eliminado del carrito correctamente
+        "404":
+          description: El carrito o el producto no fueron encontrados
+        "500":
+          description: Error interno del server
+  /api/cart/{cid}/purcharse:
+    post:
+      summary: Genera un ticket del carrito
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito en el que se generará el ticket
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Ticket generado correctamente
+        "404":
+          description: El carrito no fue encontrado
+        "500":
+          description: Error interno del server
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id: 
+          type: string
+          description:  Id autogenerado por Mongo
+        product:
+          type: array
+          items:
+            type: string
+          description: Lista de IDs de los productos en el carrito
+        quantity:
+          type: integer
+          description: Cantidad de productos en el carrito
+      example:
+        _id: ObjectId("5ca1abb6ce037511f000628e")
+        product: ["id_producto1", "id_producto2"]
+        quantity: 2
+
+  requestBodies:
+    updateCart:
+      type: object
+      properties:
+        product:
+          type: array
+          items:
+            type: string
+          description: Lista de IDs de los productos en el carrito
+        quantity:
+          type: integer
+          description: Cantidad de productos en el carrito
+      example:
+        product: ["id_producto1", "id_producto2"]
+        quantity: 2

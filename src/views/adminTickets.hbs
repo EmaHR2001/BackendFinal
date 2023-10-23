@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="api/product/products">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active btn btn-dark" aria-current="page" href="/api/user/admin/">Users</a>
+            </li>
+      </ul>
+      <div class="d-flex">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/api/users/profile">Perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/api/session/logout">Logout</a>
+            </li>
+      </div>
+    </div>
+  </div>
+</nav>
+<div>
+    <div class=" mb-3 d-flex justify-content-center">
+        <h1 class="mb-3">Admin: {{email}}</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        {{#each tickets}}
+            <div class="card shadowOne cont_cardTickets">
+                <div class="body_cardTickets">
+                    <h2 class="card-title">{{this.code}}</h2>
+                    <li>
+                        <strong>Comprador: </strong>{{this.purchaser}}<br>
+                        <strong>precio: </strong>{{this.amount}}<br>
+                        <strong>{{this.purchase_datetime}}</strong>
+                    </li>
+
+                    <!-- Modal -->
+                    <div class="modal fade modal_cardTicket" id="modalProducts-{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Productos:</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{#each this.products}}
+                                        <div class="card shadowOne mb-1 pl-5 px-4 pt-1 pb-1">
+                                            <h4 class="card-title">{{this.product.title}}</h4>
+                                            <li>
+                                                <strong>Price: </strong>{{this.product.price}}<br>
+                                                <strong>Categoria: </strong>{{this.product.category}}<br>
+                                            </li>
+                                        </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="cont_btnTickets m-3">
+                    <button type="button" class="btn btn-dark m-1" data-bs-toggle="modal" data-bs-target="#modalProducts-{{this._id}}">
+                        Productos
+                    </button>
+                    <form action="/api/users/admin/ticket-delete/{{this._id}}" method="POST">
+                        <button class="btn btn-danger m-1" type="submit">Eliminar</button>
+                    </form>
+                </footer>
+            </div>
+        {{/each}}
+    </div>
+
+    <div>
+        {{#if hasPrevPage}}
+            <a href="/api/users/admin/?page={{prevPage}}"><button class="btn btn-primary">Pagina Anterior</button></a> 
+        {{/if}}
+
+        {{#if hasNextPage}}
+            <a href="/api/users/admin/?page={{nextPage}}"><button class="btn btn-primary">Pagina Siguiente</button></a>
+        {{/if}}
+    </div>
+</div>

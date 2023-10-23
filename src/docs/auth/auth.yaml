@@ -1,0 +1,53 @@
+paths:
+  /api/session/login:
+    post:
+      tags:
+        - Auth
+      summary: Logs in and returns the authentication cookie
+      requestBody:
+        requered: true
+        description: A JSON object containing the login and password
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      security: []
+      responses:
+        "200":
+          description: Successfully authenticated. The session ID is returned in a cookie named "AuthJwt". You need to include this cookie in subsequent requests.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: AuthJwt=abcde12345; Path=/; HttpOnly
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: adminCoder@coder.com
+        password:
+          type: string
+          example: passwordHere
+  securitySchemes:
+    cookieAuth: 
+      type: apiKey
+      in: cookie
+      name: secretKey
+  responses:
+  UnauthorizedError:
+    description: Authentication information is missing or invalid
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: ERROR
+            error:
+              type: string
+              example: No auth token

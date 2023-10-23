@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/api/product/products">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/api/session/logout">Logout</a>
+                </li>
+                {{#ifCond role '===' 'premium'}}
+                <li class="nav-item">
+                    <a class="nav-link active btn btn-primary" aria-current="page" href="/create-product">Crear
+                        producto</a>
+                </li>
+                {{/ifCond}}
+                {{#ifCond role '===' 'admin'}}
+                <li class="nav-item">
+                    <a class="nav-link active btn btn-primary" aria-current="page" href="/create-product">Crear
+                        producto</a>
+                </li>
+                {{/ifCond}}
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div>
+    <h1 class="text-center">Mi perfil</h1>
+    <div class="d-flex flex-columns justify-content-center mb-3">
+        <h3 class="m-3">Nombre: {{ name }}</h3>
+        <h3 class="m-3">Email: {{ email }}</h3>
+        <div class="d-flex flex-column justify-content-center">
+            <h3 class="m-3">Rol: {{ role }}</h3>
+            {{#if updateUser}}
+            <button class="btn btn-dark"><a href="/api/users/premium/{{ id }}">Cambiar a premium</a></button>
+            {{/if}}
+        </div>
+    </div>
+    {{#if isAdmin}}
+    <div class="cont_btnAdmin">
+        <button class="btn btn-dark m-3"><a href="/api/users/admin">administrar usuarios</a></button>
+        <button class="btn btn-dark m-3"><a href="/api/users/admin/tickets">administrar tickets</a></button>
+    </div>
+    {{/if}}
+    <div class="d-flex flex-direction-columns justify-content-center mb-3">
+        <p>Ingrese Identificación, Comprobante de domicilio, Comprobante de estado de cuenta:</p>
+    </div>
+    <form class="d-flex justify-content-center  mb-3" id="cookieFormDocs"
+        action="/api/users/profile/{{ id }}/identification" method="POST" enctype="multipart/form-data">
+        <h2 class="text-center">Identification</h2>
+        <input class="m-3" name="identification" type="file" placeholder="Identification"></input>
+        <button class="button-30 m-2" type="submit">Enviar</button>
+    </form>
+    <form class="d-flex justify-content-center  mb-3" id="cookieFormDocs"
+        action="/api/users/profile/{{ id }}/ProofOfAddress" method="POST" enctype="multipart/form-data">
+        <h2 class="text-center">Proof of address</h2>
+        <input class="m-3" name="ProofOfAddress" type="file" placeholder="Proof of address"></input>
+        <button class="button-30 m-2" type="submit">Enviar</button>
+    </form>
+    <form class="d-flex justify-content-center  mb-3" id="cookieFormDocs"
+        action="/api/users/profile/{{ id }}/ProofOfStatus" method="POST" enctype="multipart/form-data">
+        <h2 class="text-center">Proof Of Status</h2>
+        <input class="m-3" name="ProofOfStatus" type="file" placeholder="Proof Of Status"></input>
+        <button class="button-30 m-2" type="submit">Enviar</button>
+    </form>
+    <br>
+    <h2 class="text-center">Cargar imagen de perfil</h2>
+    <form class="d-flex justify-content-center mb-3" id="cookieProfileImage"
+        action="/api/users/profile/{{ id }}/image-profile" method="POST" enctype="multipart/form-data">
+        <input class="m-3" name="profileImage" type="file" placeholder="ingrese imagen de perfil"></input>
+        <button class="button-30 m-2" type="submit">Subir!</button>
+    </form>
+    <br>
+    <h2 class="text-center">Cargar imagen de producto</h2>
+    <form class="d-flex justify-content-center mb-3" id="cookieProfileImage"
+        action="/api/users/profile/{{ id }}/image-product" method="POST" enctype="multipart/form-data">
+        <input class="m-3" name="productImage" type="file" placeholder="ingrese imagen de perfil"></input>
+        <button class="button-30 m-2" type="submit">Subir!</button>
+    </form>
+</div>

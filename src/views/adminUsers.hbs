@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="api/product/products">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/api/session/logout">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/api/users/profile">Perfil</a>
+            </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<div>
+    <div class=" mb-3 d-flex justify-content-center">
+        <h1 class="mb-3">Admin: {{email}}</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        {{#each users}}
+            <div class="card shadowOne card_users">
+                <form action="/api/users/admin/user-delete/{{this._id}}" method="POST">
+                    <button class="btn btn-danger" type="submit">❌</button>
+                </form>
+                <div class="card-body">
+                    <h2 class="card-title">{{this.first_name}} {{this.last_name}}</h2>
+                    <li>
+                        <strong>Email: </strong>{{this.username}}<br>
+                        <strong>Edad: </strong>{{this.age}}<br>
+                        <strong>Rol: </strong>{{this.role}}<br>
+                        <strong>{{this.last_connection}}</strong>
+                    </li>
+                </div>
+                    <footer class="cont_btnUsers m-3">
+                        <form class=" m-1 cont_btnUsers" action="/api/users/admin/user-role/{{this._id}}" method="POST">
+                            <select class="form-select d-flex justify-content-center" name="role">
+                                <option value="user" {{#ifCond this.role '===' 'user'}}selected{{/ifCond}}>Usuario</option>
+                                <option value="admin" {{#ifCond this.role '===' 'admin'}}selected{{/ifCond}}>Administrador</option>
+                                <option value="premium" {{#ifCond this.role '===' 'premium'}}selected{{/ifCond}}>Premium</option>
+                            </select>
+                            <button class=" btn btn-dark m-1" type="submit">Actualizar</button>
+                        </form>
+                    </footer>
+            </div>
+        {{/each}}
+    </div>
+
+    <div>
+        {{#if hasPrevPage}}
+            <a href="/api/users/admin/?page={{prevPage}}"><button class="btn btn-primary">Pagina Anterior</button></a> 
+        {{/if}}
+
+        {{#if hasNextPage}}
+            <a href="/api/users/admin/?page={{nextPage}}"><button class="btn btn-primary">Pagina Siguiente</button></a>
+        {{/if}}
+    </div>
+</div>
