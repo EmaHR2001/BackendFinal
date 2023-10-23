@@ -1,6 +1,5 @@
 const {Router} = require("express")
 const passport = require("passport")
-//const { loginView, registerView, productView, errorView } = require("../controllers/views.controller")
 
 const routerViews = Router()
 

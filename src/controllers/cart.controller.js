@@ -3,9 +3,10 @@ const uuid4 = require("uuid4")
 const { addToCart } = require("../utils/CustomError/info")
 const { EError } = require("../utils/CustomError/EErrors")
 const { sendEmailTicket, sendEmailOwner } = require("../utils/sendmail")
+const {Stripe} = require("stripe")
 const { envConfig } = require("../config/config")
-const StripePayment = require('../utils/Stripe');
-const stripePayment = new StripePayment();
+
+const stripe = new Stripe(envConfig.STRIPE_SECRET_KEY);
 
 class CartController {
     userCart = async (req, res) => {
@@ -309,14 +310,7 @@ class CartController {
 
                 req.logger.info('Proceso de compra finalizada con exito, los productos que están a falta de stock son: ', productsNoStock);
 
-                stripePayment.purchase(productsDisponibles)
-                    .then((sessionStripe) => {
-                        res.redirect(sessionStripe.url);
-                        console.log('Sesión de Stripe generada con éxito:', sessionStripe);
-                    })
-                    .catch((error) => {
-                        console.error('Error al procesar el pago en Stripe:', error.message);
-                    });
+                this.stripePayment(productsDisponibles)
             } else {
                 const ticketData = {
                     code: uuid4(),
@@ -343,21 +337,48 @@ class CartController {
                 sendEmailTicket(user.username, newTicket._id, productsDisponibles)
                 await cartService.deleteAllProducts(cid);
                 req.logger.info("Se generó el ticket correctamente")
-                
-                stripePayment.purchase(productsDisponibles)
-                    .then((sessionStripe) => {
-                        res.redirect(sessionStripe.url);
-                        console.log('Sesión de Stripe generada con éxito:', sessionStripe);
-                    })
-                    .catch((error) => {
-                        console.error('Error al procesar el pago en Stripe:', error.message);
-                    });
+
+                console.log("Productos disponibles:" + productsDisponibles)
+                this.stripePayment(productsDisponibles)
             }
         } catch (error) {
             req.logger.error('Error al finalizar la compra', error);
             res.status(500).send({
                 error: 'Error al finalizar el proceso de compra'
             });
+        }
+    }
+
+    async stripePayment(products) {
+        console.log("lista:" + products)
+        try {
+            // Crear una lista de productos para la compra en Stripe
+            const lineItems = products.map((product) => {
+                return {
+                    price_data: {
+                        product_data: {
+                            name: product.product.title,
+                            description: product.product.description,
+                        },
+                        currency: 'usd',
+                        unit_amount: product.product.price * 100, // El precio debe estar en centavos
+                    },
+                    quantity: product.quantity,
+                };
+            });
+            console.log("lineItems:" + lineItems)
+
+            // Crear una sesión de pago en Stripe
+            const sessionStripe = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'], // Puedes agregar otros métodos de pago si es necesario
+                line_items: lineItems,
+                mode: 'payment',
+                success_url: '/api/product/products', // Reemplaza con tu URL real
+                cancel_url: '/api/product/products', // Reemplaza con tu URL real
+            });
+            res.redirect(sessionStripe.url);
+        } catch (error) {
+            throw new Error('Problema al realizar el pago en Stripe');
         }
     }
 }
