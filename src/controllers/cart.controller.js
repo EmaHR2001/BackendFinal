@@ -3,7 +3,7 @@ const uuid4 = require("uuid4")
 const { addToCart } = require("../utils/CustomError/info")
 const { EError } = require("../utils/CustomError/EErrors")
 const { sendEmailTicket, sendEmailOwner } = require("../utils/sendmail")
-const {Stripe} = require("stripe")
+const { Stripe } = require("stripe")
 const { envConfig } = require("../config/config")
 
 const stripe = new Stripe(envConfig.STRIPE_SECRET_KEY);
@@ -155,9 +155,11 @@ class CartController {
                     code: EError.ADD_PRODUCT_CART
                 })
             }
+
             res.status(200).send(response)
+
         } catch (error) {
-            req.logger.http('Error al añadir el producto', error);
+            req.logger.info('Error al añadir el producto', error);
             req.logger.error('Error al añadir el producto', error);
             next(error)
         }
@@ -310,7 +312,12 @@ class CartController {
 
                 req.logger.info('Proceso de compra finalizada con exito, los productos que están a falta de stock son: ', productsNoStock);
 
-                this.stripePayment(productsDisponibles)
+                try {
+                    const stripeInfo = await this.stripePayment(productsDisponibles)
+                    res.redirect(stripeInfo)
+                } catch (error) {
+                    console.log(error)
+                }
             } else {
                 const ticketData = {
                     code: uuid4(),
@@ -339,7 +346,13 @@ class CartController {
                 req.logger.info("Se generó el ticket correctamente")
 
                 console.log("Productos disponibles:" + productsDisponibles)
-                this.stripePayment(productsDisponibles)
+
+                try {
+                    const stripeInfo = await this.stripePayment(productsDisponibles)
+                    res.redirect(stripeInfo)
+                } catch (error) {
+                    console.log(error)
+                }
             }
         } catch (error) {
             req.logger.error('Error al finalizar la compra', error);
@@ -373,11 +386,12 @@ class CartController {
                 payment_method_types: ['card'], // Puedes agregar otros métodos de pago si es necesario
                 line_items: lineItems,
                 mode: 'payment',
-                success_url: '/api/product/products', // Reemplaza con tu URL real
-                cancel_url: '/api/product/products', // Reemplaza con tu URL real
+                success_url: 'http://' + envConfig.HOST_URL + '/api/product/products', // Reemplaza con tu URL real
+                cancel_url: 'http://' + envConfig.HOST_URL + '/api/product/products', // Reemplaza con tu URL real
             });
-            res.redirect(sessionStripe.url);
+            return sessionStripe.url
         } catch (error) {
+            console.error('Error al realizar el pago en Stripe:', error);
             throw new Error('Problema al realizar el pago en Stripe');
         }
     }

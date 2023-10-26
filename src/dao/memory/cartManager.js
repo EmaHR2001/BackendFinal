@@ -7,7 +7,6 @@ class CartManager {
         this.path = path
     }
 
-    // 
     readCarts = async ()=>{
         try {
             if (fs.existsSync(this.path)) {

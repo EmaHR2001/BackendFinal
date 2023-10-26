@@ -22,9 +22,9 @@ describe("Testing de Bcypt", ()=>{
 describe("Testing Dto", ()=>{
     it("El servicio debe devolver un hasheo efectivo del password", async ()=>{
         let userMock = {
-            first_name: "Joaquin",
-            last_name: "Rodriguez",
-            email: "j123@gmail.com",
+            first_name: "Emanuel",
+            last_name: "Ruiz",
+            email: "E123@gmail.com",
             password: "123123"
         }
         const userDtoResult = UserDTO.getUserTokenFrom(userMock)

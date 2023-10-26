@@ -29,6 +29,7 @@ exports.AddProductError= (title) =>{
 exports.ModificationProductError= (product) =>{
     return `Error al modificar product
     * Title: need to a string, received ${product.title}
+    * Autor: need to a string, received ${product.autor}
     * Description: need to a string, received ${product.description}
     * Price: need to a string, received ${product.price}
     * Code: need to a string, received ${product.code}

@@ -21,7 +21,7 @@ exports.sendEmail = async (email, subject, html) => {
     })
 }
 
-exports.sendEmailCreateProduct = async (username, newProduct, owner) =>{
+exports.sendEmailCreateProduct = async (username, newProduct, owner) => {
     const newProductHTML = `
         <div class="justify-content-center m-3">
             <h1>Hola ${username}! Has creado un producto correctamente</h1>
@@ -31,10 +31,10 @@ exports.sendEmailCreateProduct = async (username, newProduct, owner) =>{
     `
     try {
         const mail = await transport.sendMail({
-        from,
-        to: username,
-        subject: 'Producto creado correctamente',
-        html: newProductHTML,
+            from,
+            to: username,
+            subject: 'Producto creado correctamente',
+            html: newProductHTML,
         })
         return mail;
     } catch (error) {
@@ -52,7 +52,7 @@ exports.sendEmailResetPassword = async (email, token) => {
         <h4>Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para continuar:</h4>
         <a href="http://localhost:8080/api/session/reset-password/${token}">Restablecer contraseña</a>
         <p>Si no solicitaste restablecer tu contraseña, ignora este correo.</p>
-      `,
+        `,
     })
 }
 
@@ -65,7 +65,7 @@ exports.sendEmailExpirateAccount = async (email, subject, name, date) => {
         <h2>Hola ${name}.</h2>
         <h4>Su ultima conección a la plataforma fue "${date}"</h4><br>
         <p>pese a su inactividad en la plataforma hemos decidido eliminar su cuenta.</p>
-      `,
+        `,
     })
 }
 
@@ -77,7 +77,7 @@ exports.sendEmailDeleteProduct = async (email, subject, name, productName, userN
         html: `
         <h2>Estimado ${name}.</h2>
         <h4>Su producto: "${productName}" fue eliminado de la plataforma por el siguiente usuario o administrador: ${userName}.</h4>
-      `,
+        `,
     })
 }
 
@@ -106,10 +106,10 @@ exports.sendEmailTicket = async (email, ticket, productsDisponibles) => {
     `;
     try {
         const info = await transport.sendMail({
-        from,
-        to: email,
-        subject: 'Gracias por tu compra!',
-        html: emailContent,
+            from,
+            to: email,
+            subject: 'Gracias por tu compra!',
+            html: emailContent,
         })
         return info;
     } catch (error) {

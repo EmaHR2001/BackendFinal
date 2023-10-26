@@ -1,54 +1,33 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/api/product/products">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/api/session/logout">Logout</a>
-                </li>
-                {{#ifCond role '===' 'premium'}}
-                <li class="nav-item">
-                    <a class="nav-link active btn btn-primary" aria-current="page" href="/create-product">Crear
-                        producto</a>
-                </li>
-                {{/ifCond}}
-                {{#ifCond role '===' 'admin'}}
-                <li class="nav-item">
-                    <a class="nav-link active btn btn-primary" aria-current="page" href="/create-product">Crear
-                        producto</a>
-                </li>
-                {{/ifCond}}
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+<div class="perfil_content">
+    <div class="top_content">
+        <div class="img-content">
+            <img class="perfil-img" src="https://i.pinimg.com/564x/08/d6/70/08d6703ebd72c626a2754395a2340c61.jpg">
+        </div>
+        <div class="name-content">
+            <h1 class="text-center">{{ name }} - Mi perfil</h1>
+            <div class="data_content">
+                <h3 class="m-3">Email: {{ email }}</h3>
+                <h3 class="m-3">Rol: {{ role }}</h3>
+                {{#if updateUser}}
+                <button class="btn btn-dark"><a href="/api/users/premium/{{ id }}">Cambiar a premium</a></button>
+                {{/if}}
+            </div>
         </div>
     </div>
-</nav>
-<div>
-    <h1 class="text-center">Mi perfil</h1>
     <div class="d-flex flex-columns justify-content-center mb-3">
-        <h3 class="m-3">Nombre: {{ name }}</h3>
-        <h3 class="m-3">Email: {{ email }}</h3>
         <div class="d-flex flex-column justify-content-center">
-            <h3 class="m-3">Rol: {{ role }}</h3>
-            {{#if updateUser}}
-            <button class="btn btn-dark"><a href="/api/users/premium/{{ id }}">Cambiar a premium</a></button>
-            {{/if}}
         </div>
     </div>
     {{#if isAdmin}}
     <div class="cont_btnAdmin">
-        <button class="btn btn-dark m-3"><a href="/api/users/admin">administrar usuarios</a></button>
-        <button class="btn btn-dark m-3"><a href="/api/users/admin/tickets">administrar tickets</a></button>
+        <button class="btn btn-dark m-3"><a href="/api/users/admin">Administrar usuarios</a></button>
+        <button class="btn btn-dark m-3"><a href="/api/users/admin/tickets">Administrar tickets</a></button>
+        {{#ifCond role '===' 'premium'}}
+        <a class="btn btn-dark m-3" aria-current="page" href="/create-product">Crear producto</a>
+        {{/ifCond}}
+        {{#ifCond role '===' 'admin'}}
+        <a class="btn btn-dark m-3" aria-current="page" href="/create-product">Crear producto admin</a>
+        {{/ifCond}}
     </div>
     {{/if}}
     <div class="d-flex flex-direction-columns justify-content-center mb-3">

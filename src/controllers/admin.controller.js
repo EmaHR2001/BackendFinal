@@ -5,14 +5,14 @@ const { userService } = require("../services");
 class AdminController {
     adminUsers = async (req, res) => {
         try {
-            const {page = 1} = req.query
+            const { page = 1 } = req.query
             const products = await UserModel.paginate(
                 {},
-                {limit: 3, page: page, lean: true}
+                { limit: 3, page: page, lean: true }
             );
             const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = products
-            const {username} = req.user
-            if(!req.user){
+            const { username } = req.user
+            if (!req.user) {
                 req.logger.error("No se encontró el usuario")
                 res.status(400).send({
                     status: "error",
@@ -35,13 +35,13 @@ class AdminController {
     }
     adminTickets = async (req, res) => {
         try {
-            const {page = 1} = req.query
+            const { page = 1 } = req.query
             const tickets = await TicketModel.paginate(
                 {},
-                {limit: 3, page: page, lean: true}
+                { limit: 3, page: page, lean: true }
             );
             const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = tickets
-            if(!tickets){
+            if (!tickets) {
                 req.logger.error("No se encontraron tickets")
                 res.status(400).send({
                     status: "Error",
@@ -49,8 +49,8 @@ class AdminController {
                 })
                 return
             }
-            const {username} = req.user
-            if(!req.user){
+            const { username } = req.user
+            if (!req.user) {
                 req.logger.error("No se encontró el usuario")
                 res.status(400).send({
                     status: "error",
@@ -71,15 +71,15 @@ class AdminController {
             req.logger.error("Error al acceder al endpoint", error)
         }
     }
-    changeRole = async (req, res) =>{
+    changeRole = async (req, res) => {
         try {
 
-            const {uid} = req.params
+            const { uid } = req.params
             const { role } = req.body
 
             const user = await userService.getUser(uid)
 
-            if(!user){
+            if (!user) {
                 req.logger.error("No se encontro el usuario")
                 res.status(404).send({
                     status: "error",
@@ -92,7 +92,7 @@ class AdminController {
 
             const userUpdate = await userService.updateRole(uid, role);
 
-            if(userUpdate === userRole){
+            if (userUpdate === userRole) {
                 req.logger.info("No se actualizó el rol del usuario")
                 res.status(200).send({
                     status: "Error",
@@ -107,13 +107,13 @@ class AdminController {
         } catch (error) {
             req.logger.error("Error al cambiar de rol", error)
         }
-        
+
     }
     deleteUser = async (req, res) => {
         try {
-            const {uid} = req.params
+            const { uid } = req.params
             const user = userService.getUser(uid)
-            if(!user){
+            if (!user) {
                 req.logger.error("No se encontro el usuario")
                 res.status(404).send({
                     status: "error",
@@ -125,7 +125,7 @@ class AdminController {
             req.logger.info("Usuario eliminado correctamente")
             res.status(200).redirect("/api/users/admin")
         } catch (error) {
-          req.logger.error("error al eliminar el usuario", error)
+            req.logger.error("error al eliminar el usuario", error)
         }
     }
 }

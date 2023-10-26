@@ -40,12 +40,13 @@ describe("Testing de products", ()=>{
     });
     it('El endpoint POST /api/product/ debe crear un producto', async () => {
         const newProd = {
-            title: "Iphone 11",
-            description: "Description iphone 11",
+            title: "Libro 1",
+            autor: "Brandon",
+            description: "Description Libro 1",
             thumbnail: "",
             price: 50,
             stock: 14,
-            category: "phone",
+            category: "fantasy",
             code: "I$11"
         }
         const {statusCode, _body, ok} = await requester.post('/api/product').send(newProd).set("Cookie", [`${cookie.name}=${cookie.value}`]); // Agrega la autorización necesaria
@@ -57,17 +58,18 @@ describe("Testing de products", ()=>{
     it('El endpoint PUT /api/product/:pid debe actualizar un producto', async function () {
         const pid = "64d6dc1dcdb4656e49df3271"
         const updateProd = {
-            title: "Iphone 12",
-            description: "12 descripción",
+            title: "Libro 1",
+            autor: "Brandon",
+            description: "1 descripción",
             thumbnail: "Http://rutadeimg.com",
             price: 50,
             stock: 14,
-            category: "phone",
+            category: "fantasy",
             code: "I$22134"
         }
         const {statusCode, _body, ok} = await requester.put(`/api/product/${pid}`).send(updateProd).set("Cookie", [`${cookie.name}=${cookie.value}`])
         expect(statusCode).to.be.equal(200);
         expect(ok).to.be.equal(true)
         expect(_body).to.be.an('object');;
-      });
+    });
 });

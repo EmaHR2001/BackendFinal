@@ -26,7 +26,7 @@ exports.envConfig = {
 /* GITHUB */
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-    GITHUB_CALLBACK_URL: process.env.GIT_CALLBACKURL,
+    GITHUB_CALLBACK_URL: process.env.GITHUB_CALLBACK_URL,
 
 /* ADMIN */
     ADMIN_EMAIL: process.env.ADMIN_EMAIL,

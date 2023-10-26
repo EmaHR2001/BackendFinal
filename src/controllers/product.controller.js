@@ -63,7 +63,7 @@ class ProductController {
             const { page = 1 } = req.query
             const products = await ProductModel.paginate(
                 {},
-                { limit: 3, page: page, lean: true }
+                { limit: 5, page: page, lean: true }
             )
             if(!products){
                 req.logger.error("Error al obtener productos")
@@ -120,7 +120,7 @@ class ProductController {
 
     addProduct = async (req, res, next)=>{
         try {
-            const {title, description, thumbnail, price, stock, code, category} = req.body
+            const {title, autor, description, thumbnail, price, stock, code, category} = req.body
 
             const userRole = req.user.role
             if(userRole === "user"){
@@ -132,7 +132,7 @@ class ProductController {
                 return
             };
 
-            if(!title || !description || !thumbnail || !price || !stock || !code || !category ){
+            if(!title || !autor || !description || !thumbnail || !price || !stock || !code || !category ){
                 req.logger.error("No se ingresaron todos los datos del producto")
                 res.status(400).send({
                     status: "error",
@@ -152,6 +152,7 @@ class ProductController {
             }
             const product = {
                 title: title,
+                autor: autor,
                 description: description,
                 thumbnail: thumbnail,
                 price: price,
@@ -186,7 +187,7 @@ class ProductController {
         try {
             const { pid } = req.params
             const user = req.user;
-            const {title, description, thumbnail, price, stock, code, category} = req.body
+            const {title, autor, description, thumbnail, price, stock, code, category} = req.body
             const product = await productService.getProduct(pid)
             if(!product){
                 req.logger.error("No se ah encontrado el producto")
@@ -196,11 +197,12 @@ class ProductController {
                 });
                 return
             }
-            if(!title || !description || !price || !thumbnail || !code || !stock || !category){
+            if(!title || !autor || !description || !price || !thumbnail || !code || !stock || !category){
                 req.logger.error("No se ah ingresado todos los datos, no se actualizó el producto")
             }
             let prodToRemplace = {
                 title: title,
+                autor: autor,
                 description: description,
                 price: price,
                 thumbnail: thumbnail,

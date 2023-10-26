@@ -11,6 +11,7 @@ const productSchema = new Schema({
         type: String,
         index: true
     },
+    autor: String,
     description: String,
     thumbnail: String,
     price: Number,

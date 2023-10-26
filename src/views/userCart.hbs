@@ -1,33 +1,37 @@
-<section>
-    <h1>{{name}} - Carrito de Compras</h1>
-    <table>
-    <thead>
-        <tr>
-        <th class="m-3">Producto</th>
-        <th class="m-3">Cantidad</th>
-        <th class="m-3">Precio Unitario</th>
-        <th class="m-3">Total por Producto</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each products}}
-        <tr>
-        <td class="m-3">{{product.title}}</td>
-        <td class="m-3">{{quantity}}</td>
-        <td class="m-3"> ${{product.price}}</td>
-        <td class="m-3">${{total}}</td> <!-- Muestra el total por producto -->
-        </tr>
-        {{/each}}
-    </tbody>
-    </table>
+<section class="cart-section">
+    <div class="cart-content">
+        <h1>{{name}} - Carrito de Compras</h1>
+        <table class="cart-list">
+            <thead>
+                <tr>
+                    <th class="m-3">Producto</th>
+                    <th class="m-5">Cantidad</th>
+                    <th class="m-3">Precio Unitario</th>
+                    <th class="m-3">Total por Producto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td class="m-3">{{product.title}}</td>
+                    <td class="m-3">{{quantity}}</td>
+                    <td class="m-3"> ${{product.price}}</td>
+                    <td class="m-3">${{total}}</td> <!-- Muestra el total por producto -->
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
 
-    <!-- Muestra el total de la compra -->
-    {{#if products}}
-        <p class="mt-3 mb-3">Total de la Compra: ${{total}}</p>
-        <div>
+        <!-- Muestra el total de la compra -->
+        {{#if products}}
+        <div class="cart-total">
+            <p class="m-0">Total de la Compra: ${{total}}</p>
+        </div>
+        <div class="buy-btn">
             <form action="/api/cart/{{cartId}}/purcharse" method="POST">
-                <button class="button-84" type="submit">Comprar!</button>
+                <button class="btn-primal" type="submit">Comprar!</button>
             </form>
         </div>
-    {{/if}}
+        {{/if}}
+    </div>
 </section>

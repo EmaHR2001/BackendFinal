@@ -34,9 +34,9 @@ describe('Testing de adoptame', ()=>{
         let cookie
         it('El servicio debe registrar un usuario correctamente', async ()=>{
             let userMock = {
-                first_name: 'Fede',
-                last_name: 'Osandón',
-                email: 'f@gmail.com',
+                first_name: 'Ema',
+                last_name: 'Ruiz',
+                email: 'e@gmail.com',
                 password: '123456'
             }
             const {_body} = await requester.post('/api/sessions/register').send(userMock)
@@ -44,7 +44,7 @@ describe('Testing de adoptame', ()=>{
         })
         it('El servicio debe loguear un usuario correctamente y devolver una cookie', async ()=>{
             let userMock = {
-                email: 'f@gmail.com',
+                email: 'e@gmail.com',
                 password: '123456'
             }
 
@@ -62,7 +62,7 @@ describe('Testing de adoptame', ()=>{
         })
         it('Debe enviar el jwt del usuario y consultar la ruta current', async ()=>{
             const {_body} = await requester.get('/api/sessions/current').set('Cookie', [`${cookie.name}=${cookie.value}`])
-            expect(_body.payload.email).to.be.equal('f@gmail.com')
+            expect(_body.payload.email).to.be.equal('e@gmail.com')
         })
     })
 

@@ -24,10 +24,6 @@ const PORT = envConfig.PORT || 8080
 
 connectDB()
 
-if (envConfig.NODE_ENV === 'development') {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-}
-
 app.use
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -80,8 +76,8 @@ const swaggerOptions = {
     definition: {
         openapi: "3.0.1",
         info:{
-            title: "Documentación de AppleShop",
-            description: "Esta es la documentacion de AppleShops"
+            title: "Documentación de Librería",
+            description: "Esta es la documentación de Librería"
         }
     },
     apis: [`${__dirname}/docs/**/*.yaml`]
@@ -98,5 +94,5 @@ app.use("/",routerIndex)
 app.listen(PORT, (err)=> {
     if (err) devLogger.error('Erro en el servidor', err)
     devLogger.info(`Escuchando en el puerto: ${PORT}`, "info")
-    devLogger.info(`Server host: ${envConfig.HOST_URL}${PORT}`)
+    devLogger.info(`Server host: ${envConfig.HOST_URL}`)
 })
