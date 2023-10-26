@@ -1,26 +1,55 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+                <a class="navbar-brand" href="#">Babylon Library</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page"
+                                                href="/api/product/products">Productos</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="/api/cart/user">Carrito</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page"
+                                                href="/api/users/profile">Perfil</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="/api/session/logout">Cerrar
+                                                sesión</a>
+                                </li>
+                        </ul>
+                </div>
+        </div>
+</nav>
 <div class="d-flex justify-content-center mb-3">
-    <h1>Crear producto</h1>
+        <h1>Crear producto</h1>
 </div>
 <div class="d-flex justify-content-center">
-    <form class="d-flex flex-column justify-content-center" action="/api/product" method="POST">
-        <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="title"
-                placeholder="Titulo del libro"></input></div>
-        <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="autor"
-                placeholder="Nombre del autor"></input></div>
-        <div class="mb-3">
-            <textarea class="d-flex justify-content-center" name="description"
-                placeholder="Descripción del producto"></textarea>
-        </div>
-        <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="thumbnail"
-                placeholder="Link img"></input></div>
-        <div class="mb-3"><input class="d-flex justify-content-center" type="number" name="price"
-                placeholder="Precio"></input></div>
-        <div class="mb-3"><input class="d-flex justify-content-center" type="number" name="stock"
-                placeholder="Stock"></input></div>
-        <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="category"
-                placeholder="Category"></input></div>
-        <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="code"
-                placeholder="Codigo"></input></div>
-        <button type="submit" class="button-30 m-2">Crear producto</button>
-    </form>
+        <form class="d-flex flex-column justify-content-center" action="/api/product" method="POST">
+                <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="title"
+                                placeholder="Titulo del libro"></input></div>
+                <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="autor"
+                                placeholder="Nombre del autor"></input></div>
+                <div class="mb-3">
+                        <textarea class="d-flex justify-content-center" name="description"
+                                placeholder="Descripción del producto"></textarea>
+                </div>
+                <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="thumbnail"
+                                placeholder="Link img"></input></div>
+                <div class="mb-3"><input class="d-flex justify-content-center" type="number" name="price"
+                                placeholder="Precio"></input></div>
+                <div class="mb-3"><input class="d-flex justify-content-center" type="number" name="stock"
+                                placeholder="Stock"></input></div>
+                <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="category"
+                                placeholder="Category"></input></div>
+                <div class="mb-3"><input class="d-flex justify-content-center" type="text" name="code"
+                                placeholder="Codigo"></input></div>
+                <button type="submit" class="button-30 m-2">Crear producto</button>
+        </form>
 </div>

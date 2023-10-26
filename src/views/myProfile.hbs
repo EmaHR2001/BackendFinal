@@ -1,3 +1,28 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Babylon Library</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/api/product/products">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/api/cart/user">Carrito</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/api/users/profile">Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/api/session/logout">Cerrar sesión</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="perfil_content">
     <div class="top_content">
         <div class="img-content">
@@ -50,19 +75,5 @@
         <h2 class="text-center">Proof Of Status</h2>
         <input class="m-3" name="ProofOfStatus" type="file" placeholder="Proof Of Status"></input>
         <button class="button-30 m-2" type="submit">Enviar</button>
-    </form>
-    <br>
-    <h2 class="text-center">Cargar imagen de perfil</h2>
-    <form class="d-flex justify-content-center mb-3" id="cookieProfileImage"
-        action="/api/users/profile/{{ id }}/image-profile" method="POST" enctype="multipart/form-data">
-        <input class="m-3" name="profileImage" type="file" placeholder="ingrese imagen de perfil"></input>
-        <button class="button-30 m-2" type="submit">Subir!</button>
-    </form>
-    <br>
-    <h2 class="text-center">Cargar imagen de producto</h2>
-    <form class="d-flex justify-content-center mb-3" id="cookieProfileImage"
-        action="/api/users/profile/{{ id }}/image-product" method="POST" enctype="multipart/form-data">
-        <input class="m-3" name="productImage" type="file" placeholder="ingrese imagen de perfil"></input>
-        <button class="button-30 m-2" type="submit">Subir!</button>
     </form>
 </div>
